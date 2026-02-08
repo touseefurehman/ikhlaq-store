@@ -1,0 +1,52 @@
+[2026-02-08 05:56:15] ERROR django.request Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/core/handlers/base.py", line 221, in _get_response
+    response = response.render()
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/template/base.py", line 172, in render
+    with context.bind_template(self):
+         ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/template/context.py", line 263, in bind_template
+    context = processor(self.request)
+  File "/home/touseef/New Folder (36)/New Folder (1)/shop/context_processors.py", line 16, in cart_context
+    'categories': Category.objects.all()
+                  ^^^^^^^^
+NameError: name 'Category' is not defined
+[2026-02-08 05:56:17] ERROR django.request Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/core/handlers/base.py", line 221, in _get_response
+    response = response.render()
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/template/base.py", line 172, in render
+    with context.bind_template(self):
+         ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/home/touseef/New Folder (36)/New Folder (1)/env/lib/python3.13/site-packages/django/template/context.py", line 263, in bind_template
+    context = processor(self.request)
+  File "/home/touseef/New Folder (36)/New Folder (1)/shop/context_processors.py", line 16, in cart_context
+    'categories': Category.objects.all()
+                  ^^^^^^^^
+NameError: name 'Category' is not defined
