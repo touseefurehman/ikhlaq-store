@@ -265,3 +265,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # After this, you will run collectstatic on Railway
+
+
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://ikhlaq-store-production.up.railway.app",
+]

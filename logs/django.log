@@ -59,3 +59,6 @@
 [2026-02-08 06:00:57] INFO django.utils.autoreload Watching for file changes with StatReloader
 [2026-02-08 06:02:45] ERROR django.server "GET /product/sdfdsdf/ HTTP/1.1" 500 89587
 [2026-02-08 06:02:45] WARNING django.server "GET /favicon.ico HTTP/1.1" 404 5064
+[2026-02-08 13:51:22] INFO django.utils.autoreload Watching for file changes with StatReloader
+[2026-02-08 13:53:45] INFO django.utils.autoreload /home/touseef/New Folder (36)/New Folder (3)/ikhlaq-store/estore/settings.py changed, reloading.
+[2026-02-08 13:53:46] INFO django.utils.autoreload Watching for file changes with StatReloader
