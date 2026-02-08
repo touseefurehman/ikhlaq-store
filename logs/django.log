@@ -56,3 +56,6 @@
 [2026-02-08 05:58:54] INFO django.server "GET / HTTP/1.1" 200 11192
 [2026-02-08 05:58:54] INFO django.server "GET /media/products/Screenshot_20260207_160526.png HTTP/1.1" 200 1034676
 [2026-02-08 05:58:54] INFO django.server "GET /media/category/Screenshot_20260207_162917.png HTTP/1.1" 304 0
+[2026-02-08 06:00:57] INFO django.utils.autoreload Watching for file changes with StatReloader
+[2026-02-08 06:02:45] ERROR django.server "GET /product/sdfdsdf/ HTTP/1.1" 500 89587
+[2026-02-08 06:02:45] WARNING django.server "GET /favicon.ico HTTP/1.1" 404 5064

@@ -39,6 +39,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -48,6 +50,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'estore.urls'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 TEMPLATES = [
     {
@@ -250,3 +253,15 @@ CART_SESSION_ID = 'cart'
 MAX_CART_ITEMS = 20
 FREE_SHIPPING_THRESHOLD = 100
 SHIPPING_COST = 10
+
+
+
+
+ALLOWED_HOSTS = ['*']  # Railway assigns a dynamic URL; you can tighten it later
+
+
+# settings.py
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# After this, you will run collectstatic on Railway
