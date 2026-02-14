@@ -1,0 +1,136 @@
+<!-- shop/templates/admin/order_tracking.html -->
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Order Tracking - {{ order.order_id }}</h3>
+                </div>
+                <div class="card-body">
+                    <h5>Order Information</h5>
+                    <table class="table">
+                        <tr>
+                            <th>Customer:</th>
+                            <td>{{ order.first_name }} {{ order.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td>{{ order.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone:</th>
+                            <td>{{ order.phone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Address:</th>
+                            <td>{{ order.address }}, {{ order.city }}, {{ order.postal_code }}</td>
+                        </tr>
+                        <tr>
+                            <th>Total Amount:</th>
+                            <td>${{ order.total_amount }}</td>
+                        </tr>
+                        <tr>
+                            <th>Current Status:</th>
+                            <td>
+                                <span class="badge 
+                                    {% if order.order_status == 'pending' %}badge-warning
+                                    {% elif order.order_status == 'processing' %}badge-info
+                                    {% elif order.order_status == 'shipped' %}badge-primary
+                                    {% elif order.order_status == 'delivered' %}badge-success
+                                    {% elif order.order_status == 'cancelled' %}badge-danger
+                                    {% endif %}">
+                                    {{ order.get_order_status_display }}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <hr>
+                    
+                    <h5>Order Items</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items.all %}
+                            <tr>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>${{ item.price }}</td>
+                                <td>${{ item.total_price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                    <hr>
+                    
+                    <h5>Tracking History</h5>
+                    <div class="timeline">
+                        {% for tracking in order.tracking_history.all %}
+                        <div class="mb-3">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <span class="badge 
+                                        {% if tracking.status == 'pending' %}badge-warning
+                                        {% elif tracking.status == 'processing' %}badge-info
+                                        {% elif tracking.status == 'shipped' %}badge-primary
+                                        {% elif tracking.status == 'delivered' %}badge-success
+                                        {% elif tracking.status == 'cancelled' %}badge-danger
+                                        {% endif %}">
+                                        {{ tracking.get_status_display }}
+                                    </span>
+                                </div>
+                                <div>
+                                    <strong>{{ tracking.created_at|date:"F j, Y H:i" }}</strong>
+                                    <p>{{ tracking.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p>No tracking history available.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Update Tracking</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="pending">Pending</option>
+                                <option value="processing">Processing</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea name="description" id="description" rows="3" class="form-control"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Update Tracking</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,271 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+:root{
+  --black:#000000;
+  --panel:#111111;
+  --yellow:#ffd400;
+  --yellow-soft:rgba(255,212,0,.35);
+  --text:#f5f5f5;
+  --muted:#999;
+}
+
+body{
+  background:var(--black);
+  color:var(--text);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* GLOBAL SPACING */
+section{
+  padding:80px 0;
+}
+
+/* HERO */
+.hero{
+  background: radial-gradient(circle at top, var(--yellow-soft), transparent 60%),
+              linear-gradient(180deg,#111,#000);
+  border-radius:30px;
+  box-shadow:0 50px 120px var(--yellow-soft);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero h1{
+  font-size:3.5rem;
+  font-weight:900;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  text-shadow:0 0 40px var(--yellow-soft);
+}
+
+.hero-btn{
+  background:var(--yellow);
+  color:#000;
+  font-weight:800;
+  border:none;
+  padding:14px 40px;
+  border-radius:50px;
+  transition:.3s ease;
+}
+
+.hero-btn:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 40px var(--yellow-soft);
+}
+
+/* STATS */
+.stats{
+  background:var(--panel);
+  border-radius:25px;
+}
+
+.stat-box{
+  text-align:center;
+  padding:30px;
+  transition:.3s ease;
+}
+
+.stat-box:hover{
+  transform:translateY(-10px);
+  color:var(--yellow);
+}
+
+/* CATEGORY */
+.cat-card{
+  background:var(--panel);
+  border-radius:20px;
+  padding:20px;
+  transition:.4s;
+  border:1px solid transparent;
+}
+
+.cat-card:hover{
+  transform:translateY(-15px);
+  border-color:var(--yellow);
+  box-shadow:0 30px 80px var(--yellow-soft);
+}
+
+/* PRODUCT */
+.product-card{
+  background:linear-gradient(180deg,#111,#0a0a0a);
+  border-radius:25px;
+  overflow:hidden;
+  transition:.4s;
+  border:1px solid #1a1a1a;
+}
+
+.product-card:hover{
+  transform:translateY(-18px);
+  box-shadow:0 40px 100px var(--yellow-soft);
+}
+
+.product-img{
+  height:240px;
+  object-fit:cover;
+  transition:.6s;
+}
+
+.product-card:hover .product-img{
+  transform:scale(1.1);
+}
+
+.price{
+  color:var(--yellow);
+  font-weight:800;
+}
+
+.btn-yellow{
+  background:var(--yellow);
+  color:#000;
+  border:none;
+  font-weight:700;
+  border-radius:40px;
+  padding:10px 25px;
+}
+
+.btn-yellow:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 30px var(--yellow-soft);
+}
+
+/* PROMO */
+.promo{
+  background:linear-gradient(135deg,#111,#000);
+  border-radius:30px;
+  text-align:center;
+  box-shadow:0 40px 120px var(--yellow-soft);
+}
+
+.promo h2{
+  font-weight:900;
+  color:var(--yellow);
+}
+
+/* NEWSLETTER */
+.newsletter{
+  background:var(--panel);
+  border-radius:25px;
+  text-align:center;
+}
+
+.newsletter input{
+  border-radius:50px;
+  border:none;
+  padding:12px 20px;
+}
+
+.newsletter button{
+  border-radius:50px;
+  margin-left:10px;
+}
+
+/* FOOTER STYLE */
+.footer-dark{
+  border-top:1px solid #222;
+  padding:40px 0;
+  color:var(--muted);
+}
+</style>
+
+<div class="container">
+
+<!-- HERO -->
+<section>
+<div class="hero text-center p-5">
+  <h1>BLACK EDITION</h1>
+  <p class="lead">Powerful. Bold. Unstoppable.</p>
+  <a href="#products" class="hero-btn mt-3 d-inline-block">Shop Now</a>
+</div>
+</section>
+
+<!-- STATS -->
+<section>
+<div class="stats p-4">
+  <div class="row">
+    <div class="col-md-3 stat-box">
+      <h2>10K+</h2>
+      <p>Products</p>
+    </div>
+    <div class="col-md-3 stat-box">
+      <h2>5K+</h2>
+      <p>Happy Customers</p>
+    </div>
+    <div class="col-md-3 stat-box">
+      <h2>24/7</h2>
+      <p>Support</p>
+    </div>
+    <div class="col-md-3 stat-box">
+      <h2>Fast</h2>
+      <p>Delivery</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CATEGORIES -->
+<section>
+<h2 class="mb-5 text-center">Shop by Category</h2>
+<div class="row">
+{% for category in categories %}
+<div class="col-md-3 mb-4">
+  <div class="cat-card text-center">
+    {% if category.image %}
+    <img src="{{ category.image.url }}" class="img-fluid mb-3 rounded"
+         style="height:120px;object-fit:cover;">
+    {% endif %}
+    <h5>{{ category.name }}</h5>
+  </div>
+</div>
+{% endfor %}
+</div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+<h2 class="mb-5 text-center">Featured Products</h2>
+<div class="row">
+{% for product in products %}
+<div class="col-lg-3 col-md-4 col-sm-6 mb-5">
+  <div class="product-card p-3 text-center">
+    <img src="{{ product.image.url }}" class="product-img w-100 rounded mb-3">
+    <h5>{{ product.name }}</h5>
+    <p class="price">${{ product.price }}</p>
+    <a href="{% url 'product_detail' product.slug %}" class="btn btn-yellow mt-2">
+      View Product
+    </a>
+  </div>
+</div>
+{% endfor %}
+</div>
+</section>
+
+<!-- PROMO SECTION -->
+<section>
+<div class="promo p-5">
+  <h2>LIMITED TIME DEAL</h2>
+  <p>Get up to 50% off selected products.</p>
+  <button class="btn-yellow mt-3">Explore Deals</button>
+</div>
+</section>
+
+<!-- NEWSLETTER -->
+<section>
+<div class="newsletter p-5">
+  <h3>Join Our VIP List</h3>
+  <p>Exclusive offers. Early access. Premium drops.</p>
+  <div class="d-flex justify-content-center mt-3">
+    <input type="email" placeholder="Enter your email">
+    <button class="btn-yellow">Subscribe</button>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<section class="footer-dark text-center">
+  <p>© 2026 E-Store Black Edition. All Rights Reserved.</p>
+</section>
+
+</div>
+{% endblock %}

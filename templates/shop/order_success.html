@@ -1,0 +1,30 @@
+<!-- shop/templates/shop/order_success.html -->
+{% extends 'base.html' %}
+
+{% block title %}Order Successful{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center">
+        <div class="mb-4">
+            <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+        </div>
+        <h1>Thank You for Your Order!</h1>
+        <p class="lead">Your order has been placed successfully.</p>
+        
+        <div class="card mt-4 mx-auto" style="max-width: 500px;">
+            <div class="card-body">
+                <h5 class="card-title">Order Details</h5>
+                <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+                <p><strong>Total Amount:</strong> ${{ order.total_amount }}</p>
+                <p><strong>Status:</strong> {{ order.get_order_status_display }}</p>
+                <p><strong>Date:</strong> {{ order.created_at|date:"F j, Y" }}</p>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <a href="{% url 'product_list' %}" class="btn btn-primary">Continue Shopping</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,200 @@
+<!-- shop/templates/shop/product_detail.html -->
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} - My Store{% endblock %}
+
+{% block content %}
+
+<style>
+    :root {
+        --primary: #2563eb;
+        --secondary: #6b7280;
+        --accent: #16a34a;
+        --danger: #dc2626;
+        --bg-light: #f9fafb;
+        --border-light: #e5e7eb;
+    }
+
+    body {
+        background-color: var(--bg-light);
+    }
+
+    .product-title {
+        color: var(--primary);
+        font-weight: 700;
+    }
+
+    .product-category {
+        color: var(--secondary);
+    }
+
+    .product-price {
+        color: var(--accent);
+        font-weight: 700;
+    }
+
+    .old-price {
+        color: var(--secondary);
+        margin-right: 8px;
+    }
+
+    .stock-in {
+        color: var(--accent);
+        font-weight: 600;
+    }
+
+    .stock-out {
+        color: var(--danger);
+        font-weight: 600;
+    }
+
+    .add-to-cart {
+        background-color: var(--primary);
+        border: none;
+    }
+
+    .add-to-cart:hover {
+        background-color: #1e40af;
+    }
+
+    .product-card {
+        border: 1px solid var(--border-light);
+        border-radius: 12px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .related-title {
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    .btn-outline-primary {
+        color: var(--primary);
+        border-color: var(--primary);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--primary);
+        color: #fff;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row align-items-start">
+        <!-- Product Image -->
+        <div class="col-md-6 mb-4">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="img-fluid rounded-4 shadow-sm" alt="{{ product.name }}">
+            {% else %}
+                <div class="bg-secondary text-white p-5 text-center rounded-4">
+                    No Image Available
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-md-6">
+            <h1 class="product-title">{{ product.name }}</h1>
+            <p class="product-category">Category: {{ product.category.name }}</p>
+
+            <h3 class="product-price">
+                {% if product.discount_price %}
+                    <del class="old-price">${{ product.price }}</del>
+                    ${{ product.discount_price }}
+                {% else %}
+                    ${{ product.price }}
+                {% endif %}
+            </h3>
+
+            <div class="my-3">
+                <strong>Availability:</strong>
+                {% if product.stock > 0 %}
+                    <span class="stock-in">
+                        In Stock ({{ product.stock }} available)
+                    </span>
+                {% else %}
+                    <span class="stock-out">Out of Stock</span>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <h5>Description</h5>
+                <p class="text-muted">{{ product.description|linebreaks }}</p>
+            </div>
+
+            {% if product.stock > 0 %}
+                <div class="mb-3 w-25">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="number" id="quantity" class="form-control"
+                           value="1" min="1" max="{{ product.stock }}">
+                </div>
+
+                <button class="btn btn-primary btn-lg add-to-cart"
+                        data-product-id="{{ product.id }}">
+                    🛒 Add to Cart
+                </button>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    {% if related_products %}
+    <div class="row mt-5">
+        <div class="col-12 mb-3">
+            <h3 class="related-title">Related Products</h3>
+            <hr>
+        </div>
+
+        {% for related in related_products %}
+        <div class="col-md-3 mb-4">
+            <div class="card product-card h-100">
+                {% if related.image %}
+                    <img src="{{ related.image.url }}" class="card-img-top" alt="{{ related.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h6 class="card-title">{{ related.name }}</h6>
+                    <p class="product-price">${{ related.final_price }}</p>
+                    <a href="{% url 'product_detail' related.slug %}"
+                       class="btn btn-sm btn-outline-primary">
+                        View Product
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function () {
+            const productId = this.dataset.productId;
+            const quantity = document.getElementById('quantity')?.value || 1;
+
+            fetch(`/add-to-cart/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ quantity })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ Product added to cart!');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
+
+{% endblock %}
