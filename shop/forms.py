@@ -18,3 +18,8 @@ class OrderForm(forms.ModelForm):
             'state': forms.TextInput(attrs={'class': 'form-control'}),
             'zip_code': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+
+
+
+        
