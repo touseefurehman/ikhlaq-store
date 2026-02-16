@@ -271,3 +271,5 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 CSRF_TRUSTED_ORIGINS = [
     "https://ikhlaq-store-production.up.railway.app",
 ]
+
+STATICFILES_DIRS = [BASE_DIR / "static"]
